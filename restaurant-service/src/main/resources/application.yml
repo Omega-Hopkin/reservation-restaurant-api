@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: restaurant-service
@@ -20,6 +23,10 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
 
+  web:
+    resources:
+      add-mappings: true
+
   data:
     rest:
       base-path: /api
@@ -30,8 +37,8 @@ spring:
 google:
   places:
     api:
-      key: "" "#placer après
-      #base-url: "" #placer après
+      key: ""
+      base-url: "https://maps.googleapis.com/maps/api/place" #placer apres
 
 #Eureka
 eureka:

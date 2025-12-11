@@ -32,7 +32,7 @@ public class Restaurant {
     @Column(nullable=false)
     private Double longitude; //Double 7it t9dr tkoun null
 
-    @Pattern(regexp = "^\\+?[1-9]\\d{7,14}$\n", message="Format de téléphone invalide")
+    @Pattern(regexp = "^\\+?[1-9]\\d{7,14}$", message="Format de téléphone invalide")
     private String telephone;
 
     @Email(message="Format d'email invalide")
@@ -95,7 +95,7 @@ public class Restaurant {
         if(avis.isEmpty()) {
             this.noteGlobale = 0.0;
             this.nombreAvis = 0;
-            return;
+            //return;
         } else {
             this.noteGlobale = avis.stream()
                     .mapToDouble(Avis::getNote)

@@ -2,7 +2,9 @@ package ma.project.restaurant_service.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor @AllArgsConstructor

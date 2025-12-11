@@ -1,17 +1,17 @@
 package ma.project.reservation_service.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import ma.project.reservation_service.StatusReservation;
 
 @Entity
 @Table(name = "reservations")
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -35,23 +35,25 @@ public class Reservation {
     private String restaurantTelephone;
 
     // Informations client
-    @NotBlank(message = "Le nom du client est obligatoire")
-    @Column(nullable = false)
-    private String nomClient;
+    @NotNull(message = "L'ID du client est obligatoire")
+    @Column(name = "customer_id", nullable = false)
+    private Long customerId;
 
-    @NotBlank(message = "Le prénom du client est obligatoire")
-    @Column(nullable = false)
-    private String prenomClient;
+    @Column(name = "customer_nom")
+    private String customerNom;
+
+    @Column(name = "customer_prenom")
+    private String customerPrenom;
 
     @Email(message = "Email invalide")
     @NotBlank(message = "L'email est obligatoire")
-    @Column(nullable = false)
-    private String emailClient;
+    @Column(name = "customer_email", nullable = false)
+    private String customerEmail;
 
     @Pattern(regexp = "^\\+?[0-9]{10,14}$", message = "Numéro de téléphone invalide")
     @NotBlank(message = "Le téléphone est obligatoire")
-    @Column(nullable = false)
-    private String telephoneClient;
+    @Column(nullable = false, name = "customer_telephone")
+    private String customerTelephone;
 
     // Détails de la réservation
     @NotNull(message = "La date de réservation est obligatoire")
@@ -74,7 +76,7 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    private StatutReservation statut = StatutReservation.EN_ATTENTE;
+    private StatusReservation statut = StatusReservation.EN_ATTENTE;
 
     @Column(name = "code_confirmation", unique = true)
     private String codeConfirmation;
@@ -100,6 +102,6 @@ public class Reservation {
 
     private String genererCodeConfirmation() {
         return "RES-" + System.currentTimeMillis() + "-" +
-                (int) (Math.random() * 10000);
+                (int)(Math.random() * 10000);
     }
 }

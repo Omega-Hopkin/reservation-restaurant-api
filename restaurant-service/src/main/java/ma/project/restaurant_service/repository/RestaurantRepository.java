@@ -1,9 +1,10 @@
 package ma.project.restaurant_service.repository;
 
-import feign.Param;
+//import feign.Param;
 import ma.project.restaurant_service.model.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
             "LOWER(r.typeCuisine) LIKE LOWER(CONCAT('%', :recherche, '%')) OR " +
             "LOWER(r.ville) LIKE LOWER(CONCAT('%', :recherche, '%'))")
     List<Restaurant> rechercherRestaurants(@Param("recherche") String recherche);
+
 
     @Query("SELECT r FROM Restaurant r WHERE r.actif = true AND " +
             "r.prixMoyen <= :prixMax ORDER BY r.noteGlobale DESC")

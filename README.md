@@ -5,9 +5,7 @@ Application de réservation de restaurants développée avec Spring Boot intégr
 
 Voici une vue globale du système. Ajoutez votre schéma dans `images/architecture.png`.
 
-```md
 ![Architecture microservices](images/architecture.png)
-```
 
 Les services communiquent via **OpenFeign** et sont enregistrés auprès d’Eureka. Le routing externe passe par **Spring Cloud Gateway**.
 

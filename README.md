@@ -3,7 +3,7 @@ Application de réservation de restaurants développée avec Spring Boot intégr
 
 ## 🧩 Architecture
 
-Voici une vue globale du système. Ajoutez votre schéma dans `images/architecture.png`.
+Voici une vue globale du système.
 
 ![Architecture microservices](images/architecture.png)
 
@@ -16,16 +16,7 @@ Les services communiquent via **OpenFeign** et sont enregistrés auprès d’Eur
 ### **1. Discovery Service (Eureka Server)**
 
 * **Port** : `8761`
-* Gère la découverte dynamique des services.
-* Fournit un registre où les services s’enregistrent.
 * URL : `http://localhost:8761/`
-
-Structure Maven :
-
-```
-discovery-service/
-└── src/main/java/.../DiscoveryServiceApplication.java
-```
 
 ### **2. Gateway Service**
 
@@ -41,16 +32,8 @@ Points clés :
 ### **3. Config Server**
 
 * Centralise la configuration.
-* Format : `.yml`
-* Peut pointer vers un repo Git distant ou local.
+* Pointe vers un repo Git distant privé.
 
-Exemple :
-
-```
-config-server/
-└── src/main/resources/
-    └── restaurant-service.yml
-```
 
 ### **4. Restaurant Service**
 
@@ -58,29 +41,8 @@ config-server/
 * Communique avec Customer Service et Reservation Service via Feign.
 * **Port** : `8081`
 
-Fonctionnalités :
-
-* CRUD restaurants
-* Vérification disponibilité
-
-Exemple d’endpoint :
-
-```
-GET /restaurants
-GET /restaurants/{id}
-```
-
 ### **5. Customer Service**
 
-* Gère les clients
-* CRUD complet
-
-Endpoints :
-
-```
-GET /customers
-POST /customers
-```
 
 ### **6. Reservation Service**
 
@@ -88,18 +50,12 @@ POST /customers
 * Parle avec restaurant-service + customer-service via Feign
 * Utilise Resilience4J (circuit breaker + fallback)
 
-Exemple :
-
-```
-POST /reservations
-GET /reservations/{id}
-```
 
 ---
 
 ## ⚙️ Technologies
 
-* **Java 17**
+* **Java 21**
 * **Spring Boot 3.3.x**
 * **Spring Cloud 2025.0.0**
 * **Spring Cloud Gateway**
@@ -130,7 +86,6 @@ Tous les services utilisent :
 
 ```
 src/main/resources/application.yml
-src/main/java/.../Application.java
 ```
 
 ---
@@ -139,15 +94,15 @@ src/main/java/.../Application.java
 
 ### 📌 Prérequis
 
-* JDK 17+
+* JDK 21+
 * Maven 3.8+
 * MySQL 8+
 
 ### 🛠️ 1. Cloner le projet
 
 ```
-git clone https://github.com/your/repo.git
-cd restaurant-reservation-system
+git clone [https://github.com/your/repo.git](https://github.com/Omega-Hopkin/reservation-restaurant-api)
+cd restaurant-reservation-api
 ```
 
 ### 🛠️ 2. Lancer les services **dans cet ordre**
@@ -200,54 +155,9 @@ mvn spring-boot:run
 
 Chaque service propriétaire d’une base :
 
-* restaurant-db
-* customer-db
-* reservation-db
-
-Méthode d’init : ajouter vos scripts SQL dans :
-
-```
-service-name/src/main/resources/schema.sql
-service-name/src/main/resources/data.sql
-```
-
----
-
-## 🔐 Configuration (Config Server)
-
-Les fichiers `.yml` doivent suivre cette structure :
-
-```
-restaurant-service.yml
-customer-service.yml
-reservation-service.yml
-```
-
-Avec par exemple :
-
-```yml
-server:
-  port: 8081
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/restaurant-db
-    username: root
-    password: root
-```
-
----
-
-## 🔄 Communication Feign
-
-Exemple d’un Feign Client :
-
-```java
-@FeignClient(name = "restaurant-service")
-public interface RestaurantFeignClient {
-    @GetMapping("/restaurants/{id}")
-    RestaurantDto getRestaurant(@PathVariable Long id);
-}
-```
+* api_restaurant
+* api_customer
+* api_reservation
 
 ---
 
@@ -289,11 +199,3 @@ public ReservationDto fallback(Request req, Exception e) {
 * [ ] UI React
 
 ---
-
-## 📄 License
-
-MIT License (personnalisable)
-
----
-
-**N’hésite pas à ajouter ton schéma dans `/images` pour un rendu encore plus propre.**
